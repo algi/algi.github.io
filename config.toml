@@ -1,0 +1,4 @@
+baseURL = "https://boucek.me/"
+languageCode = "en-gb"
+title = "boucek.me"
+theme = "ananke"
