@@ -1,4 +1,45 @@
 baseURL = "https://boucek.me/"
-languageCode = "en-gb"
+languageCode = "en"
 title = "boucek.me"
-theme = "ananke"
+theme = "hugo-coder"
+
+paginate = 20
+
+pygmentsstyle = "bw"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+[params]
+  author = "Marian Bouček"
+  info = "IT, music, horse riding"
+  gravatar = "boucekm@gmail.com"
+
+  since = 2021
+
+  colorScheme = "auto"
+  hidecolorschemetoggle = false
+
+[[params.social]]
+  name = "Github"
+  icon = "fa fa-github fa-2x"
+  weight = 1
+  url = "https://github.com/algi/"
+[[params.social]]
+  name = "LinkedIn"
+  icon = "fa fa-linkedin fa-2x"
+  weight = 2
+  url = "https://www.linkedin.com/in/marian-bou%C4%8Dek-57737280/"
+
+[[menu.main]]
+  name = "Blog"
+  weight = 1
+  url = "posts/"
+[[menu.main]]
+  name = "About"
+  weight = 2
+  url = "about/"
+[[menu.main]]
+  name = "RSS"
+  weight = 3
+  url = "index.xml"
+  type = "application/rss+xml"
