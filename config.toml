@@ -12,12 +12,9 @@ pygmentscodefencesguesssyntax = true
 [params]
   author = "Marian Bouček"
   info = "IT, music, horse riding"
-  gravatar = "boucekm@gmail.com"
-
+  avatarURL = "images/avatar.jpg"
   since = 2021
-
   colorScheme = "auto"
-  hidecolorschemetoggle = false
 
 [[params.social]]
   name = "Github"
