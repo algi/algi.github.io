@@ -1,5 +1,4 @@
 +++ 
-draft = true
 date = 2022-01-14
 title = "My journey from macOS to FreeBSD"
 description = "Personal experience with moving away from Apple's world."
