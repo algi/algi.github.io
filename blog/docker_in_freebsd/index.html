@@ -1,301 +1,98 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta http-equiv=content-language content="en">
-<meta name=color-scheme content="light dark">
-<meta name=author content="Marian Bouček">
-<meta name=description content="FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=content-language content="en"><meta name=color-scheme content="light dark"><meta name=author content="Marian Bouček"><meta name=description content="FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.
 I will use following tools:
- pf - Packet Filter, part of the base system vm-bhyve, grub2-bhyve - CLI front end for Bhyve tmux - optional, replacement for default cu  Networking    System configuration    Let&rsquo;s start with setting up the system.">
-<meta name=keywords content>
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Docker in FreeBSD 13">
-<meta name=twitter:description content="FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.
+ pf - Packet Filter, part of the base system vm-bhyve, grub2-bhyve - CLI front end for Bhyve tmux - optional, replacement for default cu  Networking    System configuration    Let&rsquo;s start with setting up the system."><meta name=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="Docker in FreeBSD 13"><meta name=twitter:description content="FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.
 I will use following tools:
- pf - Packet Filter, part of the base system vm-bhyve, grub2-bhyve - CLI front end for Bhyve tmux - optional, replacement for default cu  Networking    System configuration    Let&rsquo;s start with setting up the system.">
-<meta property="og:title" content="Docker in FreeBSD 13">
-<meta property="og:description" content="FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.
+ pf - Packet Filter, part of the base system vm-bhyve, grub2-bhyve - CLI front end for Bhyve tmux - optional, replacement for default cu  Networking    System configuration    Let&rsquo;s start with setting up the system."><meta property="og:title" content="Docker in FreeBSD 13"><meta property="og:description" content="FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.
 I will use following tools:
- pf - Packet Filter, part of the base system vm-bhyve, grub2-bhyve - CLI front end for Bhyve tmux - optional, replacement for default cu  Networking    System configuration    Let&rsquo;s start with setting up the system.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://boucek.me/blog/docker_in_freebsd/"><meta property="article:section" content="blog">
-<meta property="article:published_time" content="2021-12-25T00:00:00+00:00">
-<meta property="article:modified_time" content="2021-12-25T00:00:00+00:00">
-<title>
-Docker in FreeBSD 13 · boucek.me
-</title>
-<link rel=canonical href=https://boucek.me/blog/docker_in_freebsd/>
-<link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin>
-<link rel=stylesheet href=/css/coder.min.d9fddbffe6f27e69985dc5fe0471cdb0e57fbf4775714bc3d847accb08f4a1f6.css integrity="sha256-2f3b/+byfmmYXcX+BHHNsOV/v0d1cUvD2Eesywj0ofY=" crossorigin=anonymous media=screen>
-<link rel=stylesheet href=/css/coder-dark.min.002ee2378e14c7a68f1f0a53d9694ed252090987c4e768023fac694a4fc5f793.css integrity="sha256-AC7iN44Ux6aPHwpT2WlO0lIJCYfE52gCP6xpSk/F95M=" crossorigin=anonymous media=screen>
-<link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32>
-<link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16>
-<link rel=apple-touch-icon href=/images/apple-touch-icon.png>
-<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
-<meta name=generator content="Hugo 0.92.2">
-</head>
-<body class="preload-transitions colorscheme-auto">
-<div class=float-container>
-<a id=dark-mode-toggle class=colorscheme-toggle>
-<i class="fa fa-adjust fa-fw" aria-hidden=true></i>
-</a>
-</div>
-<main class=wrapper>
-<nav class=navigation>
-<section class=container>
-<a class=navigation-title href=/>
-boucek.me
-</a>
+ pf - Packet Filter, part of the base system vm-bhyve, grub2-bhyve - CLI front end for Bhyve tmux - optional, replacement for default cu  Networking    System configuration    Let&rsquo;s start with setting up the system."><meta property="og:type" content="article"><meta property="og:url" content="https://boucek.me/blog/docker_in_freebsd/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2021-12-25T00:00:00+00:00"><meta property="article:modified_time" content="2021-12-25T00:00:00+00:00"><title>Docker in FreeBSD 13 · boucek.me</title><link rel=canonical href=https://boucek.me/blog/docker_in_freebsd/><link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.d9fddbffe6f27e69985dc5fe0471cdb0e57fbf4775714bc3d847accb08f4a1f6.css integrity="sha256-2f3b/+byfmmYXcX+BHHNsOV/v0d1cUvD2Eesywj0ofY=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.002ee2378e14c7a68f1f0a53d9694ed252090987c4e768023fac694a4fc5f793.css integrity="sha256-AC7iN44Ux6aPHwpT2WlO0lIJCYfE52gCP6xpSk/F95M=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><meta name=generator content="Hugo 0.94.2"></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=/>boucek.me</a>
 <input type=checkbox id=menu-toggle>
-<label class="menu-button float-right" for=menu-toggle>
-<i class="fa fa-bars fa-fw" aria-hidden=true></i>
-</label>
-<ul class=navigation-list>
-<li class=navigation-item>
-<a class=navigation-link href=/blog/>Blog</a>
-</li>
-<li class=navigation-item>
-<a class=navigation-link href=/about/>About</a>
-</li>
-<li class=navigation-item>
-<a class=navigation-link href=/index.xml>RSS</a>
-</li>
-</ul>
-</section>
-</nav>
-<div class=content>
-<section class="container page">
-<article>
-<header>
-<h1 class=title>
-<a class=title-link href=https://boucek.me/blog/docker_in_freebsd/>
-Docker in FreeBSD 13
-</a>
-</h1>
-</header>
-<p>FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.</p>
-<p>I will use following tools:</p>
-<ul>
-<li><code>pf</code> - Packet Filter, part of the base system</li>
-<li><code>vm-bhyve, grub2-bhyve</code> - CLI front end for Bhyve</li>
-<li><code>tmux</code> - optional, replacement for default <code>cu</code></li>
-</ul>
-<h2 id=networking>
-Networking
-<a class=heading-link href=#networking>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h2>
-<h3 id=system-configuration>
-System configuration
-<a class=heading-link href=#system-configuration>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>Let&rsquo;s start with setting up the system. We need to enable gateway and packet filter. Normally I prefer <code>doasedit vim /etc/rc.conf</code>, because I like to organise content of the file and also add notes. Here I&rsquo;m using <code>sysrc</code> for simplicity:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># sysrc gateway_enabled=YES
-# sysrc pf_enabled=YES
-</code></pre></div><p>Second step is to enable IP forwarding. You can achieve that by adding a following line to <code>/etc/sysctl.conf</code>:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>net.inet.ip.forwarding=1
-</code></pre></div><p>The easiest thing to enable all these settings is to reboot the system. Experienced sysadmins might tell you that it&rsquo;s not necessary and that you could simply enable the service on the fly and run <code>sysctl</code>. Because I&rsquo;m not a sysadmin, I cannot really recommend that with confidence, sorry.</p>
-<h3 id=packet-filter>
-Packet Filter
-<a class=heading-link href=#packet-filter>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>I will skip rules configuration and focus only on creating NAT. If you are a novice and you run this on your laptop/desktop, I would probably recommend that you close all ports and allow all requests out. But please do read PF documentation and think about your use case first.</p>
-<p>In this example, I choose to use <code>10.0.1.0/24</code> range for my VMs. You are welcome to use whatever range you wish, or even use IPv6 if you are into that sort of thing (no judgement). The configuration is very simple, you just add one line to <code>/etc/pf.conf</code>:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>nat on lagg0 from {10.0.1.0/24} to any -&gt; (lagg0)
-</code></pre></div><p>You can parametrise the network interface to avoid repetition. Verify the rules and reload PF.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># pfctl -nvf /etc/pf.conf
-# pfctl -F all -f /etc/pf.conf
-</code></pre></div><p><em>Note: Here I flush everything, but I have a strong feeling that this is an overkill. Restarting the service would also be an option.</em></p>
-<h2 id=bhyve>
-Bhyve
-<a class=heading-link href=#bhyve>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h2>
-<h3 id=installation-and-configuration>
-Installation and Configuration
-<a class=heading-link href=#installation-and-configuration>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>If you have never used Bhyve, I recommend that you follow steps 1-6 from the <a href=https://github.com/churchers/vm-bhyve>vm-bhyve</a> Github page. I will not repeate the steps here, because they might change in the future. Also remember to install both packages: <code>vm-bhyve</code> and <code>grub2-bhyve</code>. Linux requires Grub boot loader.</p>
-<p>It&rsquo;s also a good idea to install <code>tmux</code> and follow <a href=https://github.com/churchers/vm-bhyve/wiki/Using-tmux>instructions</a> on the wiki to configure it. I find <code>tmux</code> much more convenient to use than default <code>cu</code>.</p>
-<h3 id=switch-interface>
-Switch Interface
-<a class=heading-link href=#switch-interface>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>With having <code>vm-bhyve</code> installed and configured, it&rsquo;s time to create bridge for our VM. Bhyve creates it&rsquo;s own bridge interface, but we need to also tell it about our NAT. Create a new switch and verify that everything is correct:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># vm switch create -a 10.0.1.1/24 public  
-# vm switch list
-NAME    TYPE      IFACE      ADDRESS      PRIVATE  MTU  VLAN  PORTS
-public  standard  vm-public  10.0.1.1/24  no       -    -     -
-</code></pre></div><p>I follow the convention and call the switch <code>public</code>. You can see that <code>vm-bhyve</code> also created interface for you. Also notice that <code>10.0.1.1</code> is our gateway.</p>
-<h3 id=download-iso>
-Download ISO
-<a class=heading-link href=#download-iso>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>It&rsquo;s time to download the ISO from <a href=https://www.alpinelinux.org/downloads/>alpinelinux.org</a>. I choose to download Virtual image distribution, since I don&rsquo;t need any extra drivers. The ISO is quite small, only 52M. Once you have it downloaded, move it to your ISO folder. If you followed steps from the tutorial, your folder will be <code>/zroot/vm/.iso/</code>. Also check that you didn&rsquo;t forget to copy the templates into your <code>/zroot/vm/.templates</code> folder.</p>
-<h3 id=create-new-vm>
-Create new VM
-<a class=heading-link href=#create-new-vm>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>Let&rsquo;s create a new VM. That can be done easily by running:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># vm create -t alpine &lt;vm_name&gt;
-</code></pre></div><p>Replace <code>&lt;vm_name></code> with your instance name. Before you start the installation, take a moment and configure your instance with <code>vm config &lt;vm_name></code>. <strong>You need to replace all occurrences of <code>vanilla</code> with <code>virt</code>, if you have downloaded Virtual image</strong>. Here&rsquo;s my configuration file at <code>/zroot/vm/alpine/alpine.conf</code>:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>loader=&#34;grub&#34;
-cpu=2
-memory=2G
-network0_type=&#34;virtio-net&#34;
-network0_switch=&#34;public&#34;
-disk0_type=&#34;virtio-blk&#34;
-disk0_name=&#34;disk0.img&#34;
-grub_install0=&#34;linux /boot/vmlinuz-virt initrd=/boot/initramfs-virt alpine_dev=cdrom:iso9660 modules=loop,squashfs,sd-mod,usb-storage,sr-mod&#34;
-grub_install1=&#34;initrd /boot/initramfs-virt&#34;
-grub_run0=&#34;linux /boot/vmlinuz-virt root=/dev/vda3 modules=ext4&#34;
-grub_run1=&#34;initrd /boot/initramfs-virt&#34;
-uuid=&#34;525267a7-1ee9-48d5-9dcf-a03f9b63c3aa&#34;
-network0_mac=&#34;58:9c:fc:04:c2:99&#34;
-</code></pre></div><p>I call my instance <code>alpine</code>. As you can see, I use 2 CPU cores rather than one. I also changed memory to 2G, just in case. I left the rest unchanged. You can also see that I&rsquo;m using <code>public</code> switch as we have created before.</p>
-<p><em>Note: It should be common sense, but just in case: please do not blindly copy&paste configuration file. Always take your time and educate yourself and use the example only for your inspiration. While there&rsquo;s (usually) nothing wrong with using default configuration, it&rsquo;s a bad habit to blindly use configuration files / commands from the internet.</em></p>
-<h3 id=alpine-linux-installation>
-Alpine Linux Installation
-<a class=heading-link href=#alpine-linux-installation>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>Almost there! It&rsquo;s time to spin the installation process and follow the instructions. Start by kicking off the installation process:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># vm install &lt;vm_name&gt; &lt;iso_name&gt;
-</code></pre></div><p>Replace <code>&lt;vm_name></code> with name of your VM and <code>&lt;iso_file></code> with the filename of the ISO, without path. In my case it was <code>alpine-virt-3.15.0-x86_64.iso</code>. The VM is started in installation mode. Connect to the console:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># vm console &lt;vm_name&gt;
-</code></pre></div><p>If you use <code>tmux</code> as recommended, you will be welcomed to familiar environment. Once the boot process is done, you will be asked to login. Use <code>root</code> without password and then start the installation process:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># setup-alpine
-</code></pre></div><p>Once you get into the network configuration, things will become interesting. As you may have noticed, we have no DHCP configured for our NAT. I think in general it&rsquo;s better to use static IP configuration for servers anyway. I did not take a screenshot of the installation process, but I will tell you what values I put there during the configuration. Do not use DHCP as mentioned before and go for static configuration:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>address: 10.0.1.2
-netmask: 255.255.255.0
-gateway: 10.0.1.1
-</code></pre></div><p>I use the first available IP (<code>10.0.1.2</code>) after gateway (<code>10.0.1.1</code>). You will be also asked about host name, feel free to pick whatever you like. When you get asked about DNS, you may use the same settings you have on your main system. If you don&rsquo;t know, you can go with <code>1.1.1.1</code>, unless you have a different preference.</p>
-<p>When asked about disk, I use <code>sys</code> option to keep things simple. I do not use SSH, because I can easily connect via console. I left NTP daemon option on default although I would never use that on BSD. On Linux, my standards (and expectations) are pretty low ;-)</p>
-<h2 id=docker>
-Docker
-<a class=heading-link href=#docker>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h2>
-<h3 id=installation>
-Installation
-<a class=heading-link href=#installation>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>Okay, here we go. Finally some Docker stuff! Before we can install Docker on our fresh Linux installation, we have to enable Community repository. Head to <code>/etc/apk/repositories</code> with your <code>vi</code> and uncomment the second line. At the time of writing this article, the content was:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>#/media/cdrom/apks
-http://uk.alpinelinux.org/alpine/v3.15/main
-http://uk.alpinelinux.org/alpine/v3.15/community
-#http://uk.alpinelinux.org/alpine/edge/main
-#http://uk.alpinelinux.org/alpine/edge/community
-#http://uk.alpinelinux.org/alpine/edge/testing
-</code></pre></div><p>Notice that since I&rsquo;m based in the UK, I&rsquo;m using local mirror. Please use the mirror closest to your location. Now it&rsquo;s time to update APK, install Docker and enable service at boot.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># apk update
-# apk add docker
-# rc-update add docker boot
-</code></pre></div><p>You have now Docker daemon running locally in your Linux, congratulations! The only problem is that it&rsquo;s not available from FreeBSD. Let&rsquo;s fix that. Create new file called <code>/etc/docker/daemon.json</code> and put the following configuration there:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>{&#34;hosts&#34;: [&#34;tcp://0.0.0.0:2375&#34;, &#34;unix:///var/run/docker.sock&#34;]}
-</code></pre></div><p>Now it&rsquo;s time to start the daemon and verify that all is working well:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># service docker start
-# docker ps
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-#
-</code></pre></div><p>We do not have any containers yet, but the daemon is up and running. If you chose to use <code>tmux</code>, exit the console by <code>Ctrl-B d</code>.</p>
-<h3 id=local-use>
-Local Use
-<a class=heading-link href=#local-use>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>From your local terminal in FreeBSD, you may now run Docker commands like this:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ DOCKER_HOST=10.0.1.2 docker ps
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-$ DOCKER_HOST=10.0.1.2 docker run hello-world
-
-Hello from Docker!
-This message shows that your installation appears to be working correctly.
-
-To generate this message, Docker took the following steps:
- 1. The Docker client contacted the Docker daemon.
- 2. The Docker daemon pulled the &#34;hello-world&#34; image from the Docker Hub.
-    (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
- $ docker run -it ubuntu bash
-
-Share images, automate workflows, and more with a free Docker ID:
- https://hub.docker.com/
-
-For more examples and ideas, visit:
- https://docs.docker.com/get-started/
-
-</code></pre></div><h3 id=various-improvements>
-Various Improvements
-<a class=heading-link href=#various-improvements>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h3>
-<p>I don&rsquo;t like to remember various IP addresses, so I prefer to edit my <code>/etc/hosts</code> file and add the following line there:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>10.0.1.2        alpine.beastie alpine
-</code></pre></div><p>That will allow me to reference the host only as <code>alpine.beastie</code> or just <code>alpine</code>.</p>
-<p>You may want to also store <code>DOCKER_HOST</code> variable in your local shell login file, so you can then just type <code>docker</code> command without trailing variable.</p>
-<h2 id=conclusion>
-Conclusion
-<a class=heading-link href=#conclusion>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h2>
-<p>You have now a fully working Docker installation in FreeBSD, congratulations!</p>
-<p>It requires a bit of work, some memory and storage overhead. Many developers and sysadmins will most probably prefer Linux when dealing with Docker. For me personally, I&rsquo;m happy with this solution as it&rsquo;s a convenient way of having Docker on the OS that I love to use.</p>
-<p>I must say though that in majority of my use cases, I use FreeBSD Jails instead. It&rsquo;s much faster and easier to work with them, although the use case is of course different than with Docker containers.</p>
-<h2 id=links>
-Links
-<a class=heading-link href=#links>
-<i class="fa fa-link" aria-hidden=true></i>
-</a>
-</h2>
-<ul>
-<li><a href=https://github.com/churchers/vm-bhyve>https://github.com/churchers/vm-bhyve</a></li>
-<li><a href=https://github.com/churchers/vm-bhyve/wiki/NAT-Configuration>https://github.com/churchers/vm-bhyve/wiki/NAT-Configuration</a></li>
-<li><a href=https://github.com/churchers/vm-bhyve/wiki/Using-tmux>https://github.com/churchers/vm-bhyve/wiki/Using-tmux</a></li>
-<li><a href=https://docs.alpinelinux.org/user-handbook/0.1a/Installing/manual.html>https://docs.alpinelinux.org/user-handbook/0.1a/Installing/manual.html</a></li>
-<li><a href=https://wiki.alpinelinux.org/wiki/Docker>https://wiki.alpinelinux.org/wiki/Docker</a></li>
-</ul>
-</article>
-</section>
-</div>
-<footer class=footer>
-<section class=container>
-©
+<label class="menu-button float-right" for=menu-toggle><i class="fa fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/blog/>Blog</a></li><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/index.xml>RSS</a></li></ul></section></nav><div class=content><section class="container page"><article><header><h1 class=title><a class=title-link href=https://boucek.me/blog/docker_in_freebsd/>Docker in FreeBSD 13</a></h1></header><p>FreeBSD 13 does not (yet) contain working Docker machine, although several implementations are on the way. This post explains how to install Docker daemon in Alpine Linux running in Bhyve. It also shows how to create NAT in Bhyve. I have to use NAT, because I use link aggregation (failover) between Wi-Fi and Ethernet.</p><p>I will use following tools:</p><ul><li><code>pf</code> - Packet Filter, part of the base system</li><li><code>vm-bhyve, grub2-bhyve</code> - CLI front end for Bhyve</li><li><code>tmux</code> - optional, replacement for default <code>cu</code></li></ul><h2 id=networking>Networking
+<a class=heading-link href=#networking><i class="fa fa-link" aria-hidden=true></i></a></h2><h3 id=system-configuration>System configuration
+<a class=heading-link href=#system-configuration><i class="fa fa-link" aria-hidden=true></i></a></h3><p>Let&rsquo;s start with setting up the system. We need to enable gateway and packet filter. Normally I prefer <code>doasedit vim /etc/rc.conf</code>, because I like to organise content of the file and also add notes. Here I&rsquo;m using <code>sysrc</code> for simplicity:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># sysrc gateway_enabled=YES
+</span></span><span style=display:flex><span># sysrc pf_enabled=YES
+</span></span></code></pre></div><p>Second step is to enable IP forwarding. You can achieve that by adding a following line to <code>/etc/sysctl.conf</code>:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>net.inet.ip.forwarding=1
+</span></span></code></pre></div><p>The easiest thing to enable all these settings is to reboot the system. Experienced sysadmins might tell you that it&rsquo;s not necessary and that you could simply enable the service on the fly and run <code>sysctl</code>. Because I&rsquo;m not a sysadmin, I cannot really recommend that with confidence, sorry.</p><h3 id=packet-filter>Packet Filter
+<a class=heading-link href=#packet-filter><i class="fa fa-link" aria-hidden=true></i></a></h3><p>I will skip rules configuration and focus only on creating NAT. If you are a novice and you run this on your laptop/desktop, I would probably recommend that you close all ports and allow all requests out. But please do read PF documentation and think about your use case first.</p><p>In this example, I choose to use <code>10.0.1.0/24</code> range for my VMs. You are welcome to use whatever range you wish, or even use IPv6 if you are into that sort of thing (no judgement). The configuration is very simple, you just add one line to <code>/etc/pf.conf</code>:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>nat on lagg0 from {10.0.1.0/24} to any -&gt; (lagg0)
+</span></span></code></pre></div><p>You can parametrise the network interface to avoid repetition. Verify the rules and reload PF.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># pfctl -nvf /etc/pf.conf
+</span></span><span style=display:flex><span># pfctl -F all -f /etc/pf.conf
+</span></span></code></pre></div><p><em>Note: Here I flush everything, but I have a strong feeling that this is an overkill. Restarting the service would also be an option.</em></p><h2 id=bhyve>Bhyve
+<a class=heading-link href=#bhyve><i class="fa fa-link" aria-hidden=true></i></a></h2><h3 id=installation-and-configuration>Installation and Configuration
+<a class=heading-link href=#installation-and-configuration><i class="fa fa-link" aria-hidden=true></i></a></h3><p>If you have never used Bhyve, I recommend that you follow steps 1-6 from the <a href=https://github.com/churchers/vm-bhyve>vm-bhyve</a> Github page. I will not repeate the steps here, because they might change in the future. Also remember to install both packages: <code>vm-bhyve</code> and <code>grub2-bhyve</code>. Linux requires Grub boot loader.</p><p>It&rsquo;s also a good idea to install <code>tmux</code> and follow <a href=https://github.com/churchers/vm-bhyve/wiki/Using-tmux>instructions</a> on the wiki to configure it. I find <code>tmux</code> much more convenient to use than default <code>cu</code>.</p><h3 id=switch-interface>Switch Interface
+<a class=heading-link href=#switch-interface><i class="fa fa-link" aria-hidden=true></i></a></h3><p>With having <code>vm-bhyve</code> installed and configured, it&rsquo;s time to create bridge for our VM. Bhyve creates it&rsquo;s own bridge interface, but we need to also tell it about our NAT. Create a new switch and verify that everything is correct:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># vm switch create -a 10.0.1.1/24 public  
+</span></span><span style=display:flex><span># vm switch list
+</span></span><span style=display:flex><span>NAME    TYPE      IFACE      ADDRESS      PRIVATE  MTU  VLAN  PORTS
+</span></span><span style=display:flex><span>public  standard  vm-public  10.0.1.1/24  no       -    -     -
+</span></span></code></pre></div><p>I follow the convention and call the switch <code>public</code>. You can see that <code>vm-bhyve</code> also created interface for you. Also notice that <code>10.0.1.1</code> is our gateway.</p><h3 id=download-iso>Download ISO
+<a class=heading-link href=#download-iso><i class="fa fa-link" aria-hidden=true></i></a></h3><p>It&rsquo;s time to download the ISO from <a href=https://www.alpinelinux.org/downloads/>alpinelinux.org</a>. I choose to download Virtual image distribution, since I don&rsquo;t need any extra drivers. The ISO is quite small, only 52M. Once you have it downloaded, move it to your ISO folder. If you followed steps from the tutorial, your folder will be <code>/zroot/vm/.iso/</code>. Also check that you didn&rsquo;t forget to copy the templates into your <code>/zroot/vm/.templates</code> folder.</p><h3 id=create-new-vm>Create new VM
+<a class=heading-link href=#create-new-vm><i class="fa fa-link" aria-hidden=true></i></a></h3><p>Let&rsquo;s create a new VM. That can be done easily by running:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># vm create -t alpine &lt;vm_name&gt;
+</span></span></code></pre></div><p>Replace <code>&lt;vm_name></code> with your instance name. Before you start the installation, take a moment and configure your instance with <code>vm config &lt;vm_name></code>. <strong>You need to replace all occurrences of <code>vanilla</code> with <code>virt</code>, if you have downloaded Virtual image</strong>. Here&rsquo;s my configuration file at <code>/zroot/vm/alpine/alpine.conf</code>:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>loader=&#34;grub&#34;
+</span></span><span style=display:flex><span>cpu=2
+</span></span><span style=display:flex><span>memory=2G
+</span></span><span style=display:flex><span>network0_type=&#34;virtio-net&#34;
+</span></span><span style=display:flex><span>network0_switch=&#34;public&#34;
+</span></span><span style=display:flex><span>disk0_type=&#34;virtio-blk&#34;
+</span></span><span style=display:flex><span>disk0_name=&#34;disk0.img&#34;
+</span></span><span style=display:flex><span>grub_install0=&#34;linux /boot/vmlinuz-virt initrd=/boot/initramfs-virt alpine_dev=cdrom:iso9660 modules=loop,squashfs,sd-mod,usb-storage,sr-mod&#34;
+</span></span><span style=display:flex><span>grub_install1=&#34;initrd /boot/initramfs-virt&#34;
+</span></span><span style=display:flex><span>grub_run0=&#34;linux /boot/vmlinuz-virt root=/dev/vda3 modules=ext4&#34;
+</span></span><span style=display:flex><span>grub_run1=&#34;initrd /boot/initramfs-virt&#34;
+</span></span><span style=display:flex><span>uuid=&#34;525267a7-1ee9-48d5-9dcf-a03f9b63c3aa&#34;
+</span></span><span style=display:flex><span>network0_mac=&#34;58:9c:fc:04:c2:99&#34;
+</span></span></code></pre></div><p>I call my instance <code>alpine</code>. As you can see, I use 2 CPU cores rather than one. I also changed memory to 2G, just in case. I left the rest unchanged. You can also see that I&rsquo;m using <code>public</code> switch as we have created before.</p><p><em>Note: It should be common sense, but just in case: please do not blindly copy&paste configuration file. Always take your time and educate yourself and use the example only for your inspiration. While there&rsquo;s (usually) nothing wrong with using default configuration, it&rsquo;s a bad habit to blindly use configuration files / commands from the internet.</em></p><h3 id=alpine-linux-installation>Alpine Linux Installation
+<a class=heading-link href=#alpine-linux-installation><i class="fa fa-link" aria-hidden=true></i></a></h3><p>Almost there! It&rsquo;s time to spin the installation process and follow the instructions. Start by kicking off the installation process:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># vm install &lt;vm_name&gt; &lt;iso_name&gt;
+</span></span></code></pre></div><p>Replace <code>&lt;vm_name></code> with name of your VM and <code>&lt;iso_file></code> with the filename of the ISO, without path. In my case it was <code>alpine-virt-3.15.0-x86_64.iso</code>. The VM is started in installation mode. Connect to the console:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># vm console &lt;vm_name&gt;
+</span></span></code></pre></div><p>If you use <code>tmux</code> as recommended, you will be welcomed to familiar environment. Once the boot process is done, you will be asked to login. Use <code>root</code> without password and then start the installation process:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># setup-alpine
+</span></span></code></pre></div><p>Once you get into the network configuration, things will become interesting. As you may have noticed, we have no DHCP configured for our NAT. I think in general it&rsquo;s better to use static IP configuration for servers anyway. I did not take a screenshot of the installation process, but I will tell you what values I put there during the configuration. Do not use DHCP as mentioned before and go for static configuration:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>address: 10.0.1.2
+</span></span><span style=display:flex><span>netmask: 255.255.255.0
+</span></span><span style=display:flex><span>gateway: 10.0.1.1
+</span></span></code></pre></div><p>I use the first available IP (<code>10.0.1.2</code>) after gateway (<code>10.0.1.1</code>). You will be also asked about host name, feel free to pick whatever you like. When you get asked about DNS, you may use the same settings you have on your main system. If you don&rsquo;t know, you can go with <code>1.1.1.1</code>, unless you have a different preference.</p><p>When asked about disk, I use <code>sys</code> option to keep things simple. I do not use SSH, because I can easily connect via console. I left NTP daemon option on default although I would never use that on BSD. On Linux, my standards (and expectations) are pretty low ;-)</p><h2 id=docker>Docker
+<a class=heading-link href=#docker><i class="fa fa-link" aria-hidden=true></i></a></h2><h3 id=installation>Installation
+<a class=heading-link href=#installation><i class="fa fa-link" aria-hidden=true></i></a></h3><p>Okay, here we go. Finally some Docker stuff! Before we can install Docker on our fresh Linux installation, we have to enable Community repository. Head to <code>/etc/apk/repositories</code> with your <code>vi</code> and uncomment the second line. At the time of writing this article, the content was:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>#/media/cdrom/apks
+</span></span><span style=display:flex><span>http://uk.alpinelinux.org/alpine/v3.15/main
+</span></span><span style=display:flex><span>http://uk.alpinelinux.org/alpine/v3.15/community
+</span></span><span style=display:flex><span>#http://uk.alpinelinux.org/alpine/edge/main
+</span></span><span style=display:flex><span>#http://uk.alpinelinux.org/alpine/edge/community
+</span></span><span style=display:flex><span>#http://uk.alpinelinux.org/alpine/edge/testing
+</span></span></code></pre></div><p>Notice that since I&rsquo;m based in the UK, I&rsquo;m using local mirror. Please use the mirror closest to your location. Now it&rsquo;s time to update APK, install Docker and enable service at boot.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># apk update
+</span></span><span style=display:flex><span># apk add docker
+</span></span><span style=display:flex><span># rc-update add docker boot
+</span></span></code></pre></div><p>You have now Docker daemon running locally in your Linux, congratulations! The only problem is that it&rsquo;s not available from FreeBSD. Let&rsquo;s fix that. Create new file called <code>/etc/docker/daemon.json</code> and put the following configuration there:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>{&#34;hosts&#34;: [&#34;tcp://0.0.0.0:2375&#34;, &#34;unix:///var/run/docker.sock&#34;]}
+</span></span></code></pre></div><p>Now it&rsquo;s time to start the daemon and verify that all is working well:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># service docker start
+</span></span><span style=display:flex><span># docker ps
+</span></span><span style=display:flex><span>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+</span></span><span style=display:flex><span>#
+</span></span></code></pre></div><p>We do not have any containers yet, but the daemon is up and running. If you chose to use <code>tmux</code>, exit the console by <code>Ctrl-B d</code>.</p><h3 id=local-use>Local Use
+<a class=heading-link href=#local-use><i class="fa fa-link" aria-hidden=true></i></a></h3><p>From your local terminal in FreeBSD, you may now run Docker commands like this:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>$ DOCKER_HOST=10.0.1.2 docker ps
+</span></span><span style=display:flex><span>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+</span></span><span style=display:flex><span>$ DOCKER_HOST=10.0.1.2 docker run hello-world
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Hello from Docker!
+</span></span><span style=display:flex><span>This message shows that your installation appears to be working correctly.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>To generate this message, Docker took the following steps:
+</span></span><span style=display:flex><span> 1. The Docker client contacted the Docker daemon.
+</span></span><span style=display:flex><span> 2. The Docker daemon pulled the &#34;hello-world&#34; image from the Docker Hub.
+</span></span><span style=display:flex><span>    (amd64)
+</span></span><span style=display:flex><span> 3. The Docker daemon created a new container from that image which runs the
+</span></span><span style=display:flex><span>    executable that produces the output you are currently reading.
+</span></span><span style=display:flex><span> 4. The Docker daemon streamed that output to the Docker client, which sent it
+</span></span><span style=display:flex><span>    to your terminal.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>To try something more ambitious, you can run an Ubuntu container with:
+</span></span><span style=display:flex><span> $ docker run -it ubuntu bash
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Share images, automate workflows, and more with a free Docker ID:
+</span></span><span style=display:flex><span> https://hub.docker.com/
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>For more examples and ideas, visit:
+</span></span><span style=display:flex><span> https://docs.docker.com/get-started/
+</span></span></code></pre></div><h3 id=various-improvements>Various Improvements
+<a class=heading-link href=#various-improvements><i class="fa fa-link" aria-hidden=true></i></a></h3><p>I don&rsquo;t like to remember various IP addresses, so I prefer to edit my <code>/etc/hosts</code> file and add the following line there:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>10.0.1.2        alpine.beastie alpine
+</span></span></code></pre></div><p>That will allow me to reference the host only as <code>alpine.beastie</code> or just <code>alpine</code>.</p><p>You may want to also store <code>DOCKER_HOST</code> variable in your local shell login file, so you can then just type <code>docker</code> command without trailing variable.</p><h2 id=conclusion>Conclusion
+<a class=heading-link href=#conclusion><i class="fa fa-link" aria-hidden=true></i></a></h2><p>You have now a fully working Docker installation in FreeBSD, congratulations!</p><p>It requires a bit of work, some memory and storage overhead. Many developers and sysadmins will most probably prefer Linux when dealing with Docker. For me personally, I&rsquo;m happy with this solution as it&rsquo;s a convenient way of having Docker on the OS that I love to use.</p><p>I must say though that in majority of my use cases, I use FreeBSD Jails instead. It&rsquo;s much faster and easier to work with them, although the use case is of course different than with Docker containers.</p><h2 id=links>Links
+<a class=heading-link href=#links><i class="fa fa-link" aria-hidden=true></i></a></h2><ul><li><a href=https://github.com/churchers/vm-bhyve>https://github.com/churchers/vm-bhyve</a></li><li><a href=https://github.com/churchers/vm-bhyve/wiki/NAT-Configuration>https://github.com/churchers/vm-bhyve/wiki/NAT-Configuration</a></li><li><a href=https://github.com/churchers/vm-bhyve/wiki/Using-tmux>https://github.com/churchers/vm-bhyve/wiki/Using-tmux</a></li><li><a href=https://docs.alpinelinux.org/user-handbook/0.1a/Installing/manual.html>https://docs.alpinelinux.org/user-handbook/0.1a/Installing/manual.html</a></li><li><a href=https://wiki.alpinelinux.org/wiki/Docker>https://wiki.alpinelinux.org/wiki/Docker</a></li></ul></article></section></div><footer class=footer><section class=container>©
 2021 -
 2022
 Marian Bouček
 ·
-Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/>Coder</a>.
-</section>
-</footer>
-</main>
-<script src=/js/coder.min.39a51230dce2ac866c049b52573e38bf60666af4bc63c1bdf203b9b2d95b1cd6.js integrity="sha256-OaUSMNzirIZsBJtSVz44v2BmavS8Y8G98gO5stlbHNY="></script>
-</body>
-</html>
+Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/>Coder</a>.</section></footer></main><script src=/js/coder.min.8fb86376a16e684af472a329aef502dbebcfab65ce264e9750d144912947c602.js integrity="sha256-j7hjdqFuaEr0cqMprvUC2+vPq2XOJk6XUNFEkSlHxgI="></script></body></html>
