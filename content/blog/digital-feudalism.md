@@ -1,6 +1,6 @@
 ---
 title: "Digital feudalism and freedom"
-date: 2022-03-08T19:12:25Z
+date: 2022-03-20T18:02:25Z
 description: "Using plain text to regain my freedom back."
 slug: "digital-feudalism"
 tags: [ "vim", "writing" ]
