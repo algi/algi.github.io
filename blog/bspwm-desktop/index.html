@@ -1,0 +1,209 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=content-language content="en"><meta name=color-scheme content="light dark"><meta name=author content="Marian Bouček"><meta name=description content="My desktop setup with bspwm."><meta name=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="bspwm - minimalistic and efficient desktop"><meta name=twitter:description content="My desktop setup with bspwm."><meta property="og:title" content="bspwm - minimalistic and efficient desktop"><meta property="og:description" content="My desktop setup with bspwm."><meta property="og:type" content="article"><meta property="og:url" content="https://boucek.me/blog/bspwm-desktop/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2022-04-17T00:00:00+00:00"><meta property="article:modified_time" content="2022-04-17T00:00:00+00:00"><title>bspwm - minimalistic and efficient desktop · boucek.me</title><link rel=canonical href=https://boucek.me/blog/bspwm-desktop/><link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin><link rel=stylesheet href=/css/coder.min.d9fddbffe6f27e69985dc5fe0471cdb0e57fbf4775714bc3d847accb08f4a1f6.css integrity="sha256-2f3b/+byfmmYXcX+BHHNsOV/v0d1cUvD2Eesywj0ofY=" crossorigin=anonymous media=screen><link rel=stylesheet href=/css/coder-dark.min.002ee2378e14c7a68f1f0a53d9694ed252090987c4e768023fac694a4fc5f793.css integrity="sha256-AC7iN44Ux6aPHwpT2WlO0lIJCYfE52gCP6xpSk/F95M=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16><link rel=apple-touch-icon href=/images/apple-touch-icon.png><link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png><meta name=generator content="Hugo 0.97.3"></head><body class="preload-transitions colorscheme-auto"><div class=float-container><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw" aria-hidden=true></i></a></div><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=/>boucek.me</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fa fa-bars fa-fw" aria-hidden=true></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=/blog/>Blog</a></li><li class=navigation-item><a class=navigation-link href=/about/>About</a></li><li class=navigation-item><a class=navigation-link href=/index.xml>RSS</a></li></ul></section></nav><div class=content><section class="container page"><article><header><h1 class=title><a class=title-link href=https://boucek.me/blog/bspwm-desktop/>bspwm - minimalistic and efficient desktop</a></h1></header><p>I would like to describe the concept of my ideal desktop. The main values are simplicity - which means only necessary services and dependencies installed; efficiency - desktop actions that can be executed by keyboard shortcuts; and customisable - so I can add or remove whatever functionality I want.</p><p>The concept is very different from what I have been using my whole life. So what changed my mind? The idea came from a series called <a href=https://telegra.ph/Ricing-your-nix-desktop-epI-01-18>Ricing your *nix desktop</a>, published on FreeBSD Telegram channel. That&rsquo;s where I got inspired to build my own lightweight desktop, instead of relying on pre-configured ones like KDE, GNOME, etc. It helped me to overcome the knowledge gap I had and it also introduced me to the idea of tiling managers. Because I was already happy with using <code>vim</code> fully from keyboard, I was quite keen to see what would happen if I started controlling the whole desktop like this. And the result was fantastic!</p><h2 id=tech-stack>Tech Stack
+<a class=heading-link href=#tech-stack><i class="fa fa-link" aria-hidden=true></i></a></h2><p>Before we start this brief blog post about how I created my dream desktop, let&rsquo;s quickly have a look at the technical stack:</p><ul><li><a href=https://www.freebsd.org>FreeBSD</a> - operating system (13-STABLE)</li><li><a href=https://x.org/wiki/>X.Org</a> - display server</li><li><a href=https://sourceforge.net/projects/slim.berlios/>slim</a> - login manager</li><li><a href=https://github.com/baskerville/bspwm>bspwm</a> - tiling window manager</li><li><a href=https://github.com/baskerville/sxhkd>sxhkd</a> - X hotkey daemon</li><li><a href=https://github.com/polybar/polybar>polybar</a> - toolbar</li></ul><h2 id=display-server-and-os>Display Server and OS
+<a class=heading-link href=#display-server-and-os><i class="fa fa-link" aria-hidden=true></i></a></h2><p>I have already explained my reasons for choosing FreeBSD over macOS in previous blog post. You can very easily follow these instructions on any GNU/Linux distribution, if you know the basics like package manager, usual file locations, etc. There&rsquo;s no particular benefit of using FreeBSD over GNU/Linux with these tools, it&rsquo;s just a matter of personal preference.</p><p>I chose X.Org display server instead of Wayland. Same with the OS, it&rsquo;s my personal choice, since you can easily find tiling managers on Wayland too (like <code>sway</code> for example). I have briefly experimented with Wayland, but found no advantages in using it over X.Org server, only more problems. I know how X.Org server works, I can easily configure it and it does everything I need. There&rsquo;s plenty of material to read about cons & pros of both solutions on the internet, so I won&rsquo;t go into more details here.</p><h2 id=login-manager>Login Manager
+<a class=heading-link href=#login-manager><i class="fa fa-link" aria-hidden=true></i></a></h2><p>Slim is simple to install and configure login manager. I chose it over the others, because I like its FreeBSD black & red colour scheme that&rsquo;s available as an extra package. It matches nicely with the colours of my ThinkPad laptop. It also doesn&rsquo;t pull in any heavy dependencies on QT/KDE, GNOME, etc. Here&rsquo;s how to install it:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># pkg install slim slim-freebsd-black-theme
+</span></span><span style=display:flex><span># sysrc slim_enable=YES
+</span></span></code></pre></div><p>Because I compiled my own version of the package without D-Bus support, I didn&rsquo;t have to activate it (normally done via <code>sysrc dbus_enable=YES</code>). It&rsquo;s because D-Bus service doesn&rsquo;t provide any functionality I need and only adds unnecessary complexity and potential security weaknesses as well (like PolKit).</p><p>I also changed the <code>current_theme</code>&rsquo;s value by switching to <code>slim-freebsd-black-theme</code> in the configuration file located at <code>/usr/local/etc/slim.etc</code>. Here&rsquo;s how it looks on my laptop:</p><p><img src=https://bytebucket.org/rigoletto-freebsd/slim-freebsd-black-theme/raw/962413abb6abe7622bdfd554bde1591547254ee7/src/preview.png alt="slim black theme sporting nice FreeBSD logo with username input field"></p><h2 id=xorg-session>X.Org Session
+<a class=heading-link href=#xorg-session><i class="fa fa-link" aria-hidden=true></i></a></h2><p>So far pretty simple and standard stuff. The truly fun part starts with defining the after-login process, which is required to start the window manager (WM) and configure X.Org server to my liking. You can find my <code>.xinitrc</code> below:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span># merge all .Xresources
+</span></span><span style=display:flex><span>xrdb -merge ~/.Xresources
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># fonts
+</span></span><span style=display:flex><span>xset +fp /home/marian/.local/share/fonts
+</span></span><span style=display:flex><span>xset +fp /usr/local/share/fonts/tamsyn-font
+</span></span><span style=display:flex><span>xset +fp /usr/local/share/fonts/powerline-fonts
+</span></span><span style=display:flex><span>xset fp rehash
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># keyboard mapping
+</span></span><span style=display:flex><span>xmodmap ~/.Xmodmap
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># set custom background
+</span></span><span style=display:flex><span>~/.fehbg
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># cursor
+</span></span><span style=display:flex><span>xsetroot -cursor_name left_ptr
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># keyboard layout
+</span></span><span style=display:flex><span>setxkbmap -layout us,cz -option grp:ctrls_toggle
+</span></span><span style=display:flex><span>setxkbmap -option &#34;terminate:ctrl_alt_bksp&#34;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># launch selected WM
+</span></span><span style=display:flex><span>if [ -x &#34;$1&#34; ]; then
+</span></span><span style=display:flex><span>	exec &#34;$1&#34; # provided by /usr/local/share/xsessions/*.desktop file
+</span></span><span style=display:flex><span>else
+</span></span><span style=display:flex><span>	exec bspwm # no WM selected, use default session
+</span></span><span style=display:flex><span>fi
+</span></span></code></pre></div><p>I will skip several configuration commands here, like the <code>.Xresources</code> and <code>.Xmodmap</code> files, to keep the blog post reasonably &ldquo;short&rdquo; as I promised in the beginning. If you want to see what these strange <code>*.desktop</code> files contain, here&rsquo;s my hand written example for bspwm.desktop file:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>[Desktop Entry]
+</span></span><span style=display:flex><span>Name=bspwm
+</span></span><span style=display:flex><span>Exec=/usr/local/bin/bspwm
+</span></span></code></pre></div><p>You might also wonder why I have support for multiple WMs there? Sometimes I&rsquo;m in a retro mood and I want to enjoy the look&feel of NeXTSTEP, so I like to hit <code>F1</code> on the login screen and choose WindowMaker session instead. I could also install <code>wdm</code> (WINGs Display Manager) to have the login manager in the same style, but I never bother, because I would have to reconfigure and restart the whole laptop.</p><h2 id=window-manager>Window Manager
+<a class=heading-link href=#window-manager><i class="fa fa-link" aria-hidden=true></i></a></h2><p>It&rsquo;s time to get introduced to the core components of my desktop - <code>bspwm</code> and <code>sxhkd</code>. What sort of fresh madness are these acronyms, you ask? <code>bspwm</code> stands for Binary Space Partitioning tiling window manager, <code>sxhkd</code> stands for Simple X Hotkey Daemon.</p><p>There you go. Now, with you being properly educated, let&rsquo;s install the packages with <code># pkg install bspwm sxhkd</code> and move straight to their configuration.</p><h3 id=bspwm-configuration>bspwm configuration
+<a class=heading-link href=#bspwm-configuration><i class="fa fa-link" aria-hidden=true></i></a></h3><p>Here&rsquo;s the content of <code>~/.config/bspwm/bspwmrc</code> configuration file. The file must be executable, because bspwm is configured by <code>bspc</code> commands. The spacing between arguments doesn&rsquo;t make a difference, it&rsquo;s just there to make it prettier.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span>#!/bin/sh
+</span></span></span><span style=display:flex><span><span></span>
+</span></span><span style=display:flex><span><span style=font-style:italic># keyboard daemon</span>
+</span></span><span style=display:flex><span>~/.config/sxhkd/start.sh
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># polybar</span>
+</span></span><span style=display:flex><span>~/.config/polybar/start.sh
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># eDP-1 (internal display), DP-1 (external display)</span>
+</span></span><span style=display:flex><span>bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9 10
+</span></span><span style=display:flex><span>bspc monitor DP-1  -d 1 2 3 4 5 6 7 8 9 10
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>bspc config border_width        2
+</span></span><span style=display:flex><span>bspc config window_gap          5
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>bspc config split_ratio         0.5
+</span></span><span style=display:flex><span>bspc config borderless_monocle  true
+</span></span><span style=display:flex><span>bspc config gapless_monocle     true
+</span></span><span style=display:flex><span>bspc config single_monocle		true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># app configurations</span>
+</span></span><span style=display:flex><span>bspc rule -a URxvt:nnn      state=pseudo_tiled center=true
+</span></span><span style=display:flex><span>bspc rule -a URxvt:htop     state=floating     center=true
+</span></span><span style=display:flex><span>bspc rule -a *:*:Calculator state=floating     center=true
+</span></span><span style=display:flex><span>bspc rule -a URxvt:mixertui state=floating     center=true
+</span></span><span style=display:flex><span>bspc rule -a URxvt:cal      state=floating     center=true
+</span></span></code></pre></div><p>I use 10 desktops in the following order: web, email, RSS, music, with the last desktop assigned to a password manager. I use the rest for various apps, like <code>vim</code> for writing and note taking, <code>RetroArch</code> for gaming, etc.</p><p>I start <code>sxhkd</code> and <code>polybar</code> only as part of <code>bspwm</code> initialisation process, so it doesn&rsquo;t run when I start WindowMaker. The content of my bspwm configuration file comes mostly from the example file located at <code>/usr/local/share/examples/bspwm/bspwmrc</code>.</p><h3 id=sxhkd-start-script>sxhkd start script
+<a class=heading-link href=#sxhkd-start-script><i class="fa fa-link" aria-hidden=true></i></a></h3><p><code>sxhkd</code> daemon allows to bind various actions like desktop switching or changing size and position of the windows to global shortcuts. It can also run various apps like <code>urxvt</code>, <code>musikcube</code>, etc. directly, using memorable shortcuts. I use <code>dmenu</code> for launching the remaining apps that I run infrequently.</p><p>I will show here only the start up script itself, leaving the lengthy and mostly copy&paste configuration file aside:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span>#!/bin/sh
+</span></span></span><span style=display:flex><span><span></span>
+</span></span><span style=display:flex><span><span style=font-style:italic># kill the current instance first</span>
+</span></span><span style=display:flex><span>pkill sxhkd
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># wait until polybar dies</span>
+</span></span><span style=display:flex><span><span style=font-weight:700>while</span> pgrep -u $UID -x sxhkd &gt;/dev/null; <span style=font-weight:700>do</span> sleep 1; <span style=font-weight:700>done</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-style:italic># start new instance</span>
+</span></span><span style=display:flex><span>sxhkd &amp;
+</span></span></code></pre></div><p>It might look pretty simple to a seasoned sysadmin, but it took me a while to get it right. The main point here is to kill all the child processes like <code>sxhkd</code> and <code>polybar</code> when bspwm is restarted.</p><p>I took most of the sxhkd configuration from the example file at <code>/usr/local/share/examples/bspwm/sxhkdrc</code>.</p><h2 id=polybar>polybar
+<a class=heading-link href=#polybar><i class="fa fa-link" aria-hidden=true></i></a></h2><p>Polybar is responsible for creating and customising status bars. bspwm itself does not provide this functionality out of the box and leaves the choice of the tool on the user. I agree with this idea of being focused only on one thing and do it well. I started with <code>lemonbar</code> instead, but I found it quite cumbersome and not flexible for my needs (I couldn&rsquo;t figure out how to use emoji there).</p><p>Because I spent countless hours on polishing my status bar, I must expose my latest iteration of it here. The configuration file itself is stored in <code>~/.config/polybar/config.ini</code>:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback><span style=display:flex><span>[bar/main]
+</span></span><span style=display:flex><span>	width = 100%
+</span></span><span style=display:flex><span>	height = 22
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	font-0=&#34;Noto Sans:size=12;2&#34;
+</span></span><span style=display:flex><span>	font-1=&#34;Wuncon Siji:size=4;2&#34;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	modules-left = bspwm
+</span></span><span style=display:flex><span>	modules-right = keyboard bhyve volume battery date
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	wm-restack = bspwm
+</span></span><span style=display:flex><span>	enable-ipc = true
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[module/keyboard]
+</span></span><span style=display:flex><span>	type = internal/xkeyboard
+</span></span><span style=display:flex><span>	format = &lt;label-layout&gt;
+</span></span><span style=display:flex><span>	format-prefix = &#34;&#34;
+</span></span><span style=display:flex><span>	format-prefix-padding = 2
+</span></span><span style=display:flex><span>	format-prefix-foreground = #ff5370
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[module/bhyve]
+</span></span><span style=display:flex><span>	type = custom/script
+</span></span><span style=display:flex><span>	exec = ~/.config/polybar/bhyve.sh
+</span></span><span style=display:flex><span>	interval = 5
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	format-prefix = &#34;&#34;
+</span></span><span style=display:flex><span>	format-prefix-padding = 2
+</span></span><span style=display:flex><span>	format-prefix-foreground = #ff5370
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[module/volume]
+</span></span><span style=display:flex><span>	type = custom/script
+</span></span><span style=display:flex><span>	exec = ~/.config/polybar/volume.sh
+</span></span><span style=display:flex><span>	interval = 5
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	format-prefix = &#34;&#34;
+</span></span><span style=display:flex><span>	format-prefix-padding = 2
+</span></span><span style=display:flex><span>	format-prefix-foreground = #ff5370
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	click-left = &#34;urxvt -name mixertui -e mixertui&#34;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[module/battery]
+</span></span><span style=display:flex><span>	type = custom/script
+</span></span><span style=display:flex><span>	exec = ~/.config/polybar/battery.sh
+</span></span><span style=display:flex><span>	interval = 5
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	format-padding = 2
+</span></span><span style=display:flex><span>	format-prefix-foreground = #ff5370
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	click-left = ~/.config/polybar/power-menu.sh
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[module/date]
+</span></span><span style=display:flex><span>	type = internal/date
+</span></span><span style=display:flex><span>	interval = 30
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	date = %d. %m.
+</span></span><span style=display:flex><span>	time = %H:%M
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	label = &#34;%{F#ff5370}%{F-} %date% %{F#ff5370}%{F-} %time%&#34;
+</span></span><span style=display:flex><span>	label-padding = 2
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>[module/bspwm]
+</span></span><span style=display:flex><span>	type = internal/bspwm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	format = &lt;label-state&gt; &lt;label-mode&gt;
+</span></span><span style=display:flex><span>	label-focused-foreground = #ff5370
+</span></span></code></pre></div><p>That&rsquo;s a really long file, isn&rsquo;t it? Let&rsquo;s dissect it piece by piece together.</p><h3 id=fonts>Fonts
+<a class=heading-link href=#fonts><i class="fa fa-link" aria-hidden=true></i></a></h3><p><code>polybar</code> doesn&rsquo;t provide any support for icons, but it does support emojis. I&rsquo;m using two fonts here - Noto and Siji. Noto can be installed from packages via <code># pkg install noto-basic noto-emoji</code>. Siji is not available in ports, so it must be installed manually as described on <a href=https://github.com/stark/siji>Siji home page</a>.</p><h3 id=bhyve-monitor-script>bhyve monitor script
+<a class=heading-link href=#bhyve-monitor-script><i class="fa fa-link" aria-hidden=true></i></a></h3><p>I love using bhyve for running various VMs on my laptop. Here&rsquo;s an extremely simple monitor script that tells me how many VMs I run at the moment.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span>#!/bin/sh
+</span></span></span><span style=display:flex><span><span></span>
+</span></span><span style=display:flex><span><span style=font-weight:700>if</span> [ -d <span style=font-style:italic>&#34;/dev/vmm&#34;</span> ]
+</span></span><span style=display:flex><span><span style=font-weight:700>then</span>
+</span></span><span style=display:flex><span>	INSTANCES=<span style=font-style:italic>&#34;</span><span style=font-weight:700>$(</span>ls /dev/vmm | awk <span style=font-style:italic>&#39;END{print NR}&#39;</span><span style=font-weight:700>)</span><span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span><span style=font-weight:700>else</span>
+</span></span><span style=display:flex><span>	INSTANCES=0
+</span></span><span style=display:flex><span><span style=font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>echo <span style=font-style:italic>&#34;</span>$INSTANCES<span style=font-style:italic>&#34;</span>
+</span></span></code></pre></div><h3 id=volume-monitor>volume monitor
+<a class=heading-link href=#volume-monitor><i class="fa fa-link" aria-hidden=true></i></a></h3><p><code>polybar</code> volume module does not support FreeBSD audio system, so I created my own implementation of it using <code>mixer</code> command and some dark <code>awk</code> magic, which I barely understand. Yes you are right, I took it mindlessly from the internet:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span>#!/bin/sh
+</span></span></span><span style=display:flex><span><span></span>
+</span></span><span style=display:flex><span>GETVOL=<span style=font-style:italic>&#34;</span><span style=font-weight:700>$(</span>mixer vol | awk <span style=font-style:italic>&#39;{ print $7 }&#39;</span> | grep -o <span style=font-style:italic>&#39;[^:]*&#39;</span> | uniq<span style=font-weight:700>)</span><span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>echo <span style=font-style:italic>&#34;</span>$GETVOL<span style=font-style:italic>%&#34;</span>
+</span></span></code></pre></div><h3 id=power-menu>power menu
+<a class=heading-link href=#power-menu><i class="fa fa-link" aria-hidden=true></i></a></h3><p>It took me a while to persuade myself that spending 15 minutes on implementing power menu is a better idea than simply hit Meta-Enter and type <code>doas poweroff</code> on the terminal every time I want to switch off the laptop. I couldn&rsquo;t figure out how to use Polybar&rsquo;s pop-up menu, so I resigned to a quick & dirty trick with <code>jqmenu</code>.</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span>#!/bin/sh
+</span></span></span><span style=display:flex><span><span></span>
+</span></span><span style=display:flex><span>printf <span style=font-style:italic>&#34;Restart,doas reboot\\nShutdown,doas poweroff\\n&#34;</span> | jgmenu --simple --at-pointer
+</span></span></code></pre></div><p>The important note here is that <code>doas</code> configuration must allow the user to run these two commands without password. I&rsquo;m not crazy enough to bother with implementing an authentication dialogue window for it here.</p><h3 id=battery-monitor-script>battery monitor script
+<a class=heading-link href=#battery-monitor-script><i class="fa fa-link" aria-hidden=true></i></a></h3><p>Another <code>polybar</code> module I had to implement by myself, because it works only on GNU/Linux. Luckily, it&rsquo;s brain dead simple to get the information from the system, provided you know where to look. Here comes a true masterpiece of my shell script programming capabilities, hang on to your hats:</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span>#!/bin/sh
+</span></span></span><span style=display:flex><span><span></span>
+</span></span><span style=display:flex><span>CHARGE=<span style=font-style:italic>&#34;</span><span style=font-weight:700>$(</span>sysctl hw.acpi.battery.life | awk <span style=font-style:italic>&#39;{ print $2 }&#39;</span><span style=font-weight:700>)</span><span style=font-style:italic>%&#34;</span>
+</span></span><span style=display:flex><span>STATE=<span style=font-style:italic>&#34;</span><span style=font-weight:700>$(</span>sysctl hw.acpi.battery.state | awk <span style=font-style:italic>&#39;{ print $2 }&#39;</span><span style=font-weight:700>)</span><span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=font-weight:700>case</span> $STATE in
+</span></span><span style=display:flex><span>	0) <span style=font-style:italic># full</span>
+</span></span><span style=display:flex><span>		LABEL=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;</span>$CHARGE<span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span>	1) <span style=font-style:italic># discharging</span>
+</span></span><span style=display:flex><span>		LABEL=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;</span>$CHARGE<span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span>	2) <span style=font-style:italic># charging</span>
+</span></span><span style=display:flex><span>		LABEL=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;</span>$CHARGE<span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span>	5) <span style=font-style:italic># discharging - critical</span>
+</span></span><span style=display:flex><span>		LABEL=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;</span>$CHARGE<span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span>	6) <span style=font-style:italic># charging - critical</span>
+</span></span><span style=display:flex><span>		LABEL=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;</span>$CHARGE<span style=font-style:italic>&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span>	7) <span style=font-style:italic># no battery</span>
+</span></span><span style=display:flex><span>		LABEL=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span>	*) <span style=font-style:italic># error</span>
+</span></span><span style=display:flex><span>		VALUE=<span style=font-style:italic>&#34;ERR&#34;</span>
+</span></span><span style=display:flex><span>		;;
+</span></span><span style=display:flex><span><span style=font-weight:700>esac</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>echo <span style=font-style:italic>&#34;%{F#ff5370}</span>$LABEL<span style=font-style:italic>%{F-} </span>$VALUE<span style=font-style:italic>&#34;</span>
+</span></span></code></pre></div><h2 id=the-end>The end
+<a class=heading-link href=#the-end><i class="fa fa-link" aria-hidden=true></i></a></h2><p>Congratulations for reaching the end of this monstrously long blog post. Didn&rsquo;t I say I will try to keep it short? Yeah sorry, that was just a poor marketing trick to force you to read the whole thing. Anyway, I hope that it will help somebody to get inspired by it and perhaps to try something different on their desktop. See you next time!</p></article></section></div><footer class=footer><section class=container>©
+2021 -
+2022
+Marian Bouček
+·
+Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/>Coder</a>.</section></footer></main><script src=/js/coder.min.8fb86376a16e684af472a329aef502dbebcfab65ce264e9750d144912947c602.js integrity="sha256-j7hjdqFuaEr0cqMprvUC2+vPq2XOJk6XUNFEkSlHxgI="></script></body></html>
