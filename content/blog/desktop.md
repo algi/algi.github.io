@@ -1,6 +1,6 @@
 ---
 title: "bspwm - minimalistic and efficient desktop"
-date: 2022-04-17
+date: 2022-04-19
 description : "My desktop setup with bspwm."
 slug : "bspwm-desktop"
 tags : [ "bspwm", "desktop" ]
