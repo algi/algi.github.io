@@ -7,9 +7,9 @@ tags: [ "freebsd", "vnet", "jails", "nat", "pf" ]
 categories: [ "FreeBSD" ]
 ---
 
-Since my early days with FreeBSD I have been fascinated by jails and their ability to form their own network stack. With the help of VNET, jails can even define their own firewall rules (if allowed), use DHCP to get an IP address, etc. Here I'm presenting a unique design, which I haven't found anywhere else. It is thoroughly documented with all steps required. It can serve various use cases: virtualised VM deployed in cloud that has only one network interface and one IP address. Or even running locally on a laptop.
+Since my early days with FreeBSD I have been fascinated by VNET jails. The ability of recreating various hardware devices using their software interface counterparts is just stunning. The jails can even define their own firewall rules inside, use DHCP to get own IP address, etc. The administrator can assemble the network as they wish, using various switches (bridge interfaces) to segregate network segments from each other.
 
-The network setup I present here is based on `if_bridge(4)` network interface with a help of `jib` (Jail-Interface-Bridge) tool to make the scripting easier. NAT provides the network translation between bridge and the physical interface. Virtual network stack (VNET) is then provided to the jail using an `epair(4)` interface, which closely resembles an Ethernet cable with two ends. One end is connected to the bridge and the other one to the jail.
+Here I'm presenting a unique design, which I haven't found fully documented anywhere else. It is thoroughly described with all steps required. It can serve various use cases: virtualised VM deployed in cloud that has only one network interface and one IP address. Or even running locally on a laptop. The network setup I present here is based on `if_bridge(4)` network interface with a help of `jib` (Jail-Interface-Bridge) tool to make the scripting easier. NAT provides the network translation between bridge and the physical interface. Virtual network stack (VNET) is then provided to the jail using an `epair(4)` interface, which closely resembles an Ethernet cable with two ends. One end is connected to the bridge and the other one to the jail.
 
 The following graph illustrates my network stack I'm using in this article: 
 
