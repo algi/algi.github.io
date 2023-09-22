@@ -25,7 +25,7 @@ pygmentscodefencesguesssyntax = true
   name = "LinkedIn"
   icon = "fa fa-linkedin fa-2x"
   weight = 2
-  url = "https://www.linkedin.com/in/marian-bou%C4%8Dek-57737280/"
+  url = "https://www.linkedin.com/in/marian-boucek-57737280/"
 
 [[menu.main]]
   name = "Blog"
