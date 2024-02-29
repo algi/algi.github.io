@@ -5,7 +5,7 @@ theme = "hugo-coder"
 
 paginate = 20
 
-pygmentsstyle = "bw"
+#pygmentsstyle = "bw"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
