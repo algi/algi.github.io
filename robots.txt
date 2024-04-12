@@ -1,0 +1,33 @@
+# OpenAI’s web crawler: GPT3.5, GPT4, ChatGPT
+# https://platform.openai.com/docs/gptbot
+User-agent: GPTBot
+
+# ChatGPT plugins
+# https://platform.openai.com/docs/plugins/bot
+User-agent: ChatGPT-User
+
+# Google's web crawler: Bard, VertexAI, Gemini
+# https://blog.google/technology/ai/an-update-on-web-publisher-controls/
+User-agent: Google-Extended
+
+# Claude
+User-agent: anthropic-ai
+
+# Common Crawl
+# https://commoncrawl.org/ccbot
+User-agent: CCBot
+
+# Omglibot: webz.io
+# https://webz.io/blog/web-data/what-is-the-omgili-bot-and-why-is-it-crawling-your-website/
+User-agent: Omgilibot
+User-agent: Omgili
+
+# Facebook: LLaMA2
+# https://developers.facebook.com/docs/sharing/bot/
+User-agent: FacebookBot
+
+# ByteDance: Duobao
+User-agent: Bytespider
+
+# Censorship area
+Disallow: /
