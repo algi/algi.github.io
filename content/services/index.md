@@ -5,54 +5,75 @@ draft: true
 ---
 
 # Headline (done)
-Hi, I'm a fractional CTO helping seed-level and A series startups to grow meaningfully.
+Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups.
 
-# What you can expect from me (in progress)
-- Empowered & Connected People
-    - empowered = full ownership & responsibility, enough context, building trust
-    - connected = no silos and no politics, free access to information
-    - well organised = good processes & tools that serve people
-    - safe, honest & open culture for whole company = best results, enjoyable workplace
+# What are my values?
+- re-read it from CEO point of view and try to role-play of how he would understand it
+- why those values are important for business?
 
-- Pragmatic approach to Technology & Innovation
-    - Technology must grow with the business without being a burden (too complex, expensive and not easily replacable)
-    - Innovation must be based on thoughtful experimentation that focuses on measurable results
-    - "Fake it until you make it" -> use premade solutions when possible, in-house solutions must bring tangible value (save money)
+## Empowered & Connected People
+- **leading efficient company communication** - structured, easily-available, written & centralized communication connects teams and enables **short time-to-market** and **high quality of the product**
+- **building empowered teams** - fosters innovation and collaboration across teams and enables the executive team to focus on driving **strategy** and **long-term vision**
+- **promoting growth culture** - leading by example, mentoring and mutual coaching creates culture of continuous improvements that make the company **highly competitive**
+- **teaming up with co-founders** - creating a close working relationship that unlocks the value of the company by turning the executive team into a highly efficient leadership machine
 
-- Impactful and enjoyable Business
-    - working with entrepreneurs -> love building / scaling the business
-    - business with positive (social/environment) impact
-    - business that is close to my heart
-    - business that is fun to do
+## My style of leading Technology & Innovation (in progress)
+- **exterme ownership from tech team** - you build it, you run it! - I help you with coaching & mentoring, but I'll hold you accountable when it brakes for everything (code, QA, security, performance, etc.) - makes the delivery & security reliable (keeps your blood presure stable and sleep sound)
+- **correctly done innovation** - slow, hard process full of experiments, slowly built in-house knowledge that produces something magical => innovation brings real business results instead of empty promises
+- **providing strong leadership and confidence in technology** - by applying both my hands-on technical presence (where it counts) with technology team and executive mindset (with co-founders), I do something good for business
 
-- TODO: tohle by melo byt v Services
-- describe package: handled software development, necessary processes, due diligence, ...
+- **product ???** - measure success (PostHog)
+- **data science** - with focus on measurable data analytics
+
+- **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
+
+## Impactful and enjoyable Business - (in progress)
+- **increasing trustworthiness of business** - by making the company compliant with various regulations (GDPR, HIPAA, etc.) from IT point of view, makes the company more trustworthy for clients and investors
+- **open approach to clients & investors** - by not being afraid of them, I shape the company' technological vision and image
+- **networking** - partners, hiring
+
+- passionate about transforming ideas into revenue-generating products using technology
+    - impact: making revenue
+    - how: using technology as means to produce value (not just for enjoyment)
+- technology that delights customers & users in company
+    - impact: increases customer engagement and satisfaction
+    - how: technology vision
+- startup mindset
+    - impact: good fit in startup culture, enabler
+    - how: I prefer done over perfect, lean approach to team structure and processes
 
 # What you can expect from working with me as a fractional CTO?
-1. Leadership & Expertise
-    - I use my Leadership & Expertise to build empowered teams, efficient process & right culture to solve the problems, instead of doing things manually by myself and thus not solving the actual root of the problem.
+## Leadership & Expertise
+I use my Leadership & Expertise to build empowered teams, efficient process & right culture to solve the problems, instead of doing things manually by myself and thus not solving the actual root of the problem.
 
-2. Mindful hands-on approach
-    - I don't shy away from focused hands-on approach, when the problem requires my expertise or "shit hits the fan".
+## Mindful hands-on approach
+I don't shy away from focused hands-on approach, when the problem requires my expertise or "shit hits the fan".
 
-3. Time efficient approach
-    - This is especially true for fractional CTO whose time is limited. That's why I focus on coaching & mentoring and setting up the right processes and communication channels.
-    - I do the hard work of being efficient with your time, which means that whatever I can get done myself, I do.
+## Time efficient approach
+This is especially true for fractional CTO whose time is limited. That's why I focus on coaching & mentoring and setting up the right processes and communication channels.
+I do the hard work of being efficient with your time, which means that whatever I can get done myself, I do.
 
 # My Services (ready for text)
 - build me an app - seed & A series
-    - time: 2-3 months
     - REST API, web app & mobile app (ReactNative)
     - hiring outsourced team / in-house team
     - including security assesment
     - why: because it's also a hobby for me (some people make sweaters, I make apps)
+        - "experienced hands-on CTO"
+        - again focus on CEO's needs 
+        - technical product
+        - portfolio (TTC, etc.)
+        - I can add / decide technology easily
+        - describe my fraction of time (for what): architecture, but no developer / QA, ...
+        - I set up process & team
+        - We can have more junior team, because I can cover up with more senior decisions & oversee the work => via mentoring and leading by example
 
 - improve my delivery - seed & A series
-    - time: 2 weeks
     - communications & project management
     - executives & delivery teams that wants more independence and clarified delivery
     - why: because inefficient companies are pain to work for and with
     - TODO: measurable
+    - % of my time (fraction) - "I'll use this fraction of my work" (1,2 days of my week should be okay)
 
 - your 1-day CTO handyman - seed lvl & A series
     - suitable for: what kind of people & problems does this solve? ("coach / validator")
@@ -77,11 +98,14 @@ Hi, I'm a fractional CTO helping seed-level and A series startups to grow meanin
     - created REST API solution for B2B SaaS
     - helped with international expansion
     - due diligence for security & privacy (GDPR, HIPAA, PIPA, etc.)
+    - "try before you buy" -> Python REST API, designed the API & docs
 - story about be/impact
     - created Bubble app
     - hired contractor
     - hepled with presentation for investors
     - improved communication and project management
+    - spent $5k and 1,5 month instead of $20k and 2-3 months
+    - "try before you buy" -> Bubble onboarding wizard
 
 ---
 # Ideal client profile (just for context)
