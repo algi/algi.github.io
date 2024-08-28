@@ -18,13 +18,11 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 - **teaming up with co-founders** - creating a close working relationship that unlocks the value of the company by turning the executive team into a highly efficient leadership machine
 
 ## My style of leading Technology & Innovation (in progress)
-- **exterme ownership from tech team** - you build it, you run it! - I help you with coaching & mentoring, but I'll hold you accountable when it brakes for everything (code, QA, security, performance, etc.) - makes the delivery & security reliable (keeps your blood presure stable and sleep sound)
-- **correctly done innovation** - slow, hard process full of experiments, slowly built in-house knowledge that produces something magical => innovation brings real business results instead of empty promises
+- **establishing complete ownership within the team** - "You build it, you run it!" by introducing complete end-to-end ownership of the product while supporting the team with coaching & mentoring makes the product reliable and the business resilient (and keeps your blood presure stable and sleep sound)
+- **cultivating innovation for real, measurable impact** - creating steady stream of small experiments, while measuring their impact, keeps the pace of growth under control, so the company can constantly innovate their product and technology in order to stay ahead of the competition
+
 - **providing strong leadership and confidence in technology** - by applying both my hands-on technical presence (where it counts) with technology team and executive mindset (with co-founders), I do something good for business
-
-- **product ???** - measure success (PostHog)
 - **data science** - with focus on measurable data analytics
-
 - **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
 
 ## Impactful and enjoyable Business - (in progress)
