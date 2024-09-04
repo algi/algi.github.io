@@ -7,25 +7,22 @@ draft: true
 # Headline (done)
 Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups.
 
-# What are my values?
-- re-read it from CEO point of view and try to role-play of how he would understand it
-- why those values are important for business?
-
+# My values
 ## Empowered & Connected People
 - **leading efficient company communication** - structured, easily-available, written & centralized communication connects teams and enables **short time-to-market** and **high quality of the product**
 - **building empowered teams** - fosters innovation and collaboration across teams and enables the executive team to focus on driving **strategy** and **long-term vision**
 - **promoting growth culture** - leading by example, mentoring and mutual coaching creates culture of continuous improvements that make the company **highly competitive**
 - **teaming up with co-founders** - creating a close working relationship that unlocks the value of the company by turning the executive team into a highly efficient leadership machine
 
-## My style of leading Technology & Innovation (in progress)
+## Technology & Innovation that serves the Business
+- **be at the helm of the technology, personally** - hands-on leadership provides confidence, focus and clarity for both executive and technology teams and provides shorter and more predictable time to market
 - **establishing complete ownership within the team** - "You build it, you run it!" by introducing complete end-to-end ownership of the product while supporting the team with coaching & mentoring makes the product reliable and the business resilient (and keeps your blood presure stable and sleep sound)
-- **cultivating innovation for real, measurable impact** - creating steady stream of small experiments, while measuring their impact, keeps the pace of growth under control, so the company can constantly innovate their product and technology in order to stay ahead of the competition
-
-- **providing strong leadership and confidence in technology** - by applying both my hands-on technical presence (where it counts) with technology team and executive mindset (with co-founders), I do something good for business
-- **data science** - with focus on measurable data analytics
+- **cultivating innovation for real, measurable impact** - creating steady stream of small experiments, while measuring the impact, keeps the pace of growth under control, so the company can constantly innovate their product and technology in order to stay ahead of the competition
 - **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
 
 ## Impactful and enjoyable Business - (in progress)
+"What excites you about business? What is your business style?"
+
 - **increasing trustworthiness of business** - by making the company compliant with various regulations (GDPR, HIPAA, etc.) from IT point of view, makes the company more trustworthy for clients and investors
 - **open approach to clients & investors** - by not being afraid of them, I shape the company' technological vision and image
 - **networking** - partners, hiring
