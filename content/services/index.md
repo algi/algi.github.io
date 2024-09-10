@@ -20,22 +20,10 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 - **cultivating innovation for real, measurable impact** - creating steady stream of small experiments, while measuring the impact, keeps the pace of growth under control, so the company can constantly innovate their product and technology in order to stay ahead of the competition
 - **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
 
-## Impactful and enjoyable Business - (in progress)
-"What excites you about business? What is your business style?"
-
-- **increasing trustworthiness of business** - by making the company compliant with various regulations (GDPR, HIPAA, etc.) from IT point of view, makes the company more trustworthy for clients and investors
-- **open approach to clients & investors** - by not being afraid of them, I shape the company' technological vision and image
-- **networking** - partners, hiring
-
-- passionate about transforming ideas into revenue-generating products using technology
-    - impact: making revenue
-    - how: using technology as means to produce value (not just for enjoyment)
-- technology that delights customers & users in company
-    - impact: increases customer engagement and satisfaction
-    - how: technology vision
-- startup mindset
-    - impact: good fit in startup culture, enabler
-    - how: I prefer done over perfect, lean approach to team structure and processes
+## Impactful and enjoyable Business
+- **transforming ideas into product** - using technology as means to produce value keeps the focus on company
+- **delighting customers** - choosing solid, non-obtrusive technology that enables customers to be happy and rely on the product
+-- **working with startup mindset** - prefer done over perfect, lean approach to team structure and processes makes me a good fit in startup culture
 
 # What you can expect from working with me as a fractional CTO?
 ## Leadership & Expertise
