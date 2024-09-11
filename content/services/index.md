@@ -21,8 +21,8 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 - **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
 
 ## Impactful and enjoyable Business
-- **transforming ideas into product** - using technology as means to produce value keeps the focus on company
-- **delighting customers** - choosing solid, non-obtrusive technology that enables customers to be happy and rely on the product
+- **transforming ideas into product** - I love turning creating and impactful ideas into great products
+- **delighting customers** - choosing solid, non-obtrusive, cost-efficient technology that makes customers happy and the product reliable
 -- **working with startup mindset** - prefer done over perfect, lean approach to team structure and processes makes me a good fit in startup culture
 
 # What you can expect from working with me as a fractional CTO?
