@@ -4,7 +4,6 @@ date: 2024-08-11T11:17:00+02:00
 draft: true
 ---
 
-# Headline (in-progress)
 Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups.
 
 # My values
@@ -14,7 +13,7 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 - **promoting growth culture** - leading by example, mentoring and mutual coaching creates culture of continuous improvements that make the company **highly competitive**
 - **teaming up with co-founders** - creating a close working relationship that unlocks the value of the company by turning the executive team into a highly efficient leadership machine
 
-## Technology & Innovation that serves the Business
+## Technology & Mindful Innovation
 - **be at the helm of the technology, personally** - hands-on leadership provides confidence, focus and clarity for both executive and technology teams and provides shorter and more predictable time to market
 - **small expenses, big value** - using the appropriate technology for the task with regards to TCO (Total Cost of Ownership) keeps the budget under control
 - **cultivating innovation for real, measurable impact** - creating a steady stream of small, measurable experiments enables the company to constantly innovate and stay ahead of the competition
