@@ -24,53 +24,36 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 - **delighting customers** - choosing solid, non-obtrusive, cost-efficient technology that makes customers happy and the product reliable
 -- **working with startup mindset** - prefer done over perfect, lean approach to team structure and processes makes me a good fit in startup culture
 
-# What you can expect from working with me as a fractional CTO?
-## Leadership & Expertise
-I use my Leadership & Expertise to build empowered teams, efficient process & right culture to solve the problems, instead of doing things manually by myself and thus not solving the actual root of the problem.
-
-## Mindful hands-on approach
-I don't shy away from focused hands-on approach, when the problem requires my expertise or "shit hits the fan".
-
-## Time efficient approach
-This is especially true for fractional CTO whose time is limited. That's why I focus on coaching & mentoring and setting up the right processes and communication channels.
-I do the hard work of being efficient with your time, which means that whatever I can get done myself, I do.
-
-# My Services (ready for text)
+# My Services
+Ideas from Pedro:
 - more focused on examples, to explain what I did for previous
 - be a co-founder for a day per week
 - interim / fractional CTO
 
-- build me an app - seed & A series
-    - REST API, web app & mobile app (ReactNative)
-    - hiring outsourced team / in-house team
-    - including security assesment
-    - why: because it's also a hobby for me (some people make sweaters, I make apps)
-        - "experienced hands-on CTO"
-        - again focus on CEO's needs 
-        - technical product
-        - portfolio (TTC, etc.)
-        - I can add / decide technology easily
-        - describe my fraction of time (for what): architecture, but no developer / QA, ...
-        - I set up process & team
-        - We can have more junior team, because I can cover up with more senior decisions & oversee the work => via mentoring and leading by example
+## I need an app!
+Does your business need a web or mobile application? I provide full package necessary to make that happen, including:
+- technology & architecture assessment
+- hiring & building team
+- provide security & compliance audit
+- launching the app
 
-- improve my delivery - seed & A series
-    - communications & project management
-    - executives & delivery teams that wants more independence and clarified delivery
-    - why: because inefficient companies are pain to work for and with
-    - TODO: measurable
-    - % of my time (fraction) - "I'll use this fraction of my work" (1,2 days of my week should be okay)
+## My tech team is slow!
+Does your engineering team moves slowly and you don't know why? Are they often confused, deliver too late and the app is constantly having problems? I will look at the following areas:
+- focused and efficient communication between leadership and teams themselves
+- efficient project management for small teams
+- flexible and actionable technical strategy
+- engineering processess and best practices
 
-- your 1-day CTO handyman - seed lvl & A series
-    - suitable for: what kind of people & problems does this solve? ("coach / validator")
-    - how much time: days maximum
-    - security, privacy
-    - communication & project management
-    - investor's presentation
-    - roadmap & strategy
-    - architecture (no-code vs low code vs traditional development)
-    - validate delivery processes
-    - why: because I love variable work, to learn always something new that challenges me
+## Your 1-day CTO handyman
+- suitable for: what kind of people & problems does this solve? ("coach / validator")
+- how much time: days maximum
+- security, privacy
+- communication & project management
+- investor's presentation
+- roadmap & strategy
+- architecture (no-code vs low code vs traditional development)
+- validate delivery processes
+- why: because I love variable work, to learn always something new that challenges me
 
 # Prices (in progress)
 - inside IR35 (normally middle-man)
@@ -93,9 +76,4 @@ I do the hard work of being efficient with your time, which means that whatever 
     - improved communication and project management
     - spent $5k and 1,5 month instead of $20k and 2-3 months
     - "try before you buy" -> Bubble onboarding wizard
-
----
-# Ideal client profile (just for context)
-- seed level (non-technical co-founders)
-- series A sized startups with small development & product team, but also sales & marketing & CSM - around 50 people max
 
