@@ -16,12 +16,12 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 
 ## Technology & Innovation that serves the Business
 - **be at the helm of the technology, personally** - hands-on leadership provides confidence, focus and clarity for both executive and technology teams and provides shorter and more predictable time to market
-- **establishing complete ownership within the team** - "You build it, you run it!" by introducing complete end-to-end ownership of the product while supporting the team with coaching & mentoring makes the product reliable and the business resilient (and keeps your blood presure stable and sleep sound)
-- **cultivating innovation for real, measurable impact** - creating steady stream of small experiments, while measuring the impact, keeps the pace of growth under control, so the company can constantly innovate their product and technology in order to stay ahead of the competition
+- **building the right team** - empowered, accountable and reliable team creates great & reliable product, which is cornerstone of every successful business
+- **cultivating innovation for real, measurable impact** - creating a steady stream of small, measurable experiments enables the company to constantly innovate and stay ahead of the competition, while having the budget under control
 - **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
 
 ## Impactful and enjoyable Business
-- **transforming ideas into product** - I love turning creating and impactful ideas into great products
+- **transforming ideas into product** - I love turning creative and impactful ideas into great products
 - **delighting customers** - choosing solid, non-obtrusive, cost-efficient technology that makes customers happy and the product reliable
 -- **working with startup mindset** - prefer done over perfect, lean approach to team structure and processes makes me a good fit in startup culture
 
@@ -37,6 +37,10 @@ This is especially true for fractional CTO whose time is limited. That's why I f
 I do the hard work of being efficient with your time, which means that whatever I can get done myself, I do.
 
 # My Services (ready for text)
+- more focused on examples, to explain what I did for previous
+- be a co-founder for a day per week
+- interim / fractional CTO
+
 - build me an app - seed & A series
     - REST API, web app & mobile app (ReactNative)
     - hiring outsourced team / in-house team
@@ -70,6 +74,7 @@ I do the hard work of being efficient with your time, which means that whatever 
     - why: because I love variable work, to learn always something new that challenges me
 
 # Prices (in progress)
+- inside IR35 (normally middle-man)
 - tiers: 100%, 50%, etc. - TODO: ...
 - handyman tier: 700 / day
 - help to decide how much you need me
