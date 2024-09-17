@@ -4,7 +4,7 @@ date: 2024-08-11T11:17:00+02:00
 draft: true
 ---
 
-# Headline (done)
+# Headline (in-progress)
 Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups.
 
 # My values
@@ -16,8 +16,8 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 
 ## Technology & Innovation that serves the Business
 - **be at the helm of the technology, personally** - hands-on leadership provides confidence, focus and clarity for both executive and technology teams and provides shorter and more predictable time to market
-- **building the right team** - empowered, accountable and reliable team creates great & reliable product, which is cornerstone of every successful business
-- **cultivating innovation for real, measurable impact** - creating a steady stream of small, measurable experiments enables the company to constantly innovate and stay ahead of the competition, while having the budget under control
+- **small expenses, big value** - using the appropriate technology for the task with regards to TCO (Total Cost of Ownership) keeps the budget under control
+- **cultivating innovation for real, measurable impact** - creating a steady stream of small, measurable experiments enables the company to constantly innovate and stay ahead of the competition
 - **protecting company IT** - by promoting security-aware culture to combat latest security threats and phishing attempts, I bring the necessary protection for business reputation, stability and confidentiality (IP)
 
 ## Impactful and enjoyable Business
