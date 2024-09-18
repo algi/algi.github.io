@@ -25,11 +25,6 @@ Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups
 -- **working with startup mindset** - prefer done over perfect, lean approach to team structure and processes makes me a good fit in startup culture
 
 # My Services
-Ideas from Pedro:
-- more focused on examples, to explain what I did for previous
-- be a co-founder for a day per week
-- interim / fractional CTO
-
 ## I need an app!
 Does your business need a web or mobile application? I provide full package necessary to make that happen, including:
 - technology & architecture assessment
@@ -44,24 +39,14 @@ Does your engineering team moves slowly and you don't know why? Are they often c
 - flexible and actionable technical strategy
 - engineering processess and best practices
 
-## Your 1-day CTO handyman
-- suitable for: what kind of people & problems does this solve? ("coach / validator")
-- how much time: days maximum
-- security, privacy
-- communication & project management
-- investor's presentation
-- roadmap & strategy
-- architecture (no-code vs low code vs traditional development)
-- validate delivery processes
-- why: because I love variable work, to learn always something new that challenges me
+# Prices
+I charge as pay-as-you-go with an option to hire me a full time, if desired. For the UK customers, I work outside IR35.
 
-# Prices (in progress)
-- inside IR35 (normally middle-man)
-- tiers: 100%, 50%, etc. - TODO: ...
-- handyman tier: 700 / day
-- help to decide how much you need me
-- pay as you go with option to hire me full time, if desired
-- note: I can't work for equity only, sorry.
+## Price Tiers
+- standard daily rate: £1,000
+- for more than 1 day per week, price can be negotiated
+- I also provide special price for impact startups / projects, that are very close to my heart
+- I cannot work for equity only, sorry!
 
 # Stories & Core Responsibilities (in progress)
 - story about Qumata
