@@ -4,7 +4,7 @@ date: 2021-12-26T21:49:08Z
 ---
 
 ## Professional Life
-Long time developer, mainly focused on API development in Java. Later on I became full stack by adding JavaScript. I love working with cloud (in my case it's AWS). Later on I became Technical Lead for couple of years and recently CTO. I also used to enjoy tinkering with Objective-C and Swift.
+I'm a long time developer, mainly focused on API development in Java. Later on I became full stack by adding JavaScript. I love working with cloud (in my case it's AWS). Later on I became Technical Lead for couple of years and recently CTO. I also used to enjoy tinkering with Objective-C and Swift.
 
 ## Hobbies
 I like messing with OS. I used to love Windows 2000. Decent looking OS, games worked on it nicely. Then I moved to Linux, but didn't stay long at it. I wanted to have a laptop that works out of the box. So I bought my first MacBook Pro (2007). Very solid piece of hardware, sadly no longer working. During 2021 I got fed up by Apple's direction with their software and hardware quality and went to FreeBSD. So far I feel happy there with my refurbished ThinkPad T470.
