@@ -32,11 +32,15 @@ pygmentscodefencesguesssyntax = true
   weight = 1
   url = "blog/"
 [[menu.main]]
-  name = "About"
+  name = "Services"
   weight = 2
+  url = "services/"
+[[menu.main]]
+  name = "About"
+  weight = 3
   url = "about/"
 [[menu.main]]
   name = "RSS"
-  weight = 3
+  weight = 4
   url = "index.xml"
   type = "application/rss+xml"
