@@ -1,12 +1,7 @@
 # boucek.me
-## Build & Deploy
-- build: `hugo --gc --minify`
-- gzip: `gzip -k -r **/*.html public/**/*.css public/**/*.xml public/**/*.txt public/**/*.jpg public/**/*.ttf public/**/*.woff2 public/**/*.eot public/**/*.svg public/**/*.woff`
+Public website of boucek.me, now hosted on Github.
 
-## Deploy
-- deploy to ~/www: `rclone sync public/ fishie:www/`
-- then copy into `doas cp -R ~/www/* /var/www/htdocs/boucek.me/`
-
-## Preview
-- production-like: `hugo server`
-- with drafts: `hugo -D server`
+## Commands
+- new post: `hugo new blog/<name>.md`
+- preview, production-like: `hugo server`
+- preview, with drafts: `hugo -D server`
