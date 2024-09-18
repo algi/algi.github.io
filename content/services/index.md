@@ -39,7 +39,7 @@ Does your engineering team moves slowly and you don't know why? Are they often c
 - engineering processess and best practices
 
 # Prices
-I charge as pay-as-you-go with an option to hire me a full time, if desired. For the UK customers, I work outside IR35.
+I charge pay-as-you-go with an option to hire me full time, if desired. For the UK customers, I work outside IR35.
 
 ## Price Tiers
 - standard daily rate: £1,000
