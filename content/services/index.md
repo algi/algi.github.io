@@ -1,7 +1,6 @@
 ---
 title: "Services"
-date: 2024-08-11T11:17:00+02:00
-draft: true
+date: 2024-09-18
 ---
 
 Hi, I'm a fractional CTO working with pre-seed, seed-level and A series startups.
@@ -47,18 +46,4 @@ I charge as pay-as-you-go with an option to hire me a full time, if desired. For
 - for more than 1 day per week, price can be negotiated
 - I also provide special price for impact startups / projects, that are very close to my heart
 - I cannot work for equity only, sorry!
-
-# Stories & Core Responsibilities (in progress)
-- story about Qumata
-    - created REST API solution for B2B SaaS
-    - helped with international expansion
-    - due diligence for security & privacy (GDPR, HIPAA, PIPA, etc.)
-    - "try before you buy" -> Python REST API, designed the API & docs
-- story about be/impact
-    - created Bubble app
-    - hired contractor
-    - hepled with presentation for investors
-    - improved communication and project management
-    - spent $5k and 1,5 month instead of $20k and 2-3 months
-    - "try before you buy" -> Bubble onboarding wizard
 
