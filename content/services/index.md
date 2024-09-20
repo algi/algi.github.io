@@ -39,11 +39,11 @@ Does your engineering team moves slowly and you don't know why? Are they often c
 - engineering processess and best practices
 
 # Prices
-I charge pay-as-you-go with an option to hire me full time, if desired. For the UK customers, I work outside IR35.
+I charge pay-as-you-go with an option to hire me full time, if desired. I work outside IR35 for UK customers.
 
 ## Price Tiers
-- standard daily rate: £1,000
-- for more than 1 day per week, price can be negotiated
-- I also provide special price for impact startups / projects, that are very close to my heart
-- I cannot work for equity only, sorry!
+- standard hourly rate: £125
+- price is subject to negotiation based on the nature of the business and conditions
+- I'm especially interested in working with impact startup clients, so please get in touch even if you just want to discuss your options!
+- I accept cash & equity as payment
 
