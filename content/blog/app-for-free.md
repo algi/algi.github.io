@@ -1,7 +1,6 @@
 ---
 title: "How to create a web application without spending money"
-date: 2024-09-18T15:44:58+02:00
-draft: true
+date: 2024-09-27T13:28:00+02:00
 description: "Deploying Ruby on Rails app in cloud for free."
 slug: "create-app-for-free"
 tags: [ "cloud" ]
