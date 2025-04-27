@@ -3,9 +3,8 @@ languageCode = "en"
 title = "boucek.me"
 theme = "hugo-coder"
 
-paginate = 20
+pagination.pagerSize = 20
 
-#pygmentsstyle = "bw"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
